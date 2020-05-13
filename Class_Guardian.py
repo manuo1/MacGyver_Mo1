@@ -1,12 +1,12 @@
 # coding: utf-8
 
-#Herite de la class square 
-import Square
+#Herite de la class Game_Object 
+from Class_Game_Object import Game_Object
 
-class Guardian(Square):
+class Guardian(Game_Object):
 	"""
 	add asleep Attributes (if the guardian sleeps we can go out)
 	"""
 	def __init__(self, pos_X, pos_Y, appearance, asleep):
-		Square.__init__(pos_X, pos_Y, appearance)
+		Game_Object.__init__(self, pos_X, pos_Y, appearance)
 		self.asleep = asleep
