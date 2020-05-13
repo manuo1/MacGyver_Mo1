@@ -8,6 +8,6 @@ class Hero(Game_Object):
 	add invetory Attributes (we need to know if the hero 
 	has all the objects to create the syringe)
 	"""
-	def __init__(self, appearance, pos_X, pos_Y, inventory):
-		Game_Object.__init__(self, appearance, pos_X, pos_Y)
+	def __init__(self, object_type, pos_X, pos_Y, inventory):
+		Game_Object.__init__(self, object_type, pos_X, pos_Y)
 		self.inventory = inventory
