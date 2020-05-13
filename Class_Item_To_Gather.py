@@ -7,6 +7,6 @@ class Item_To_Gather(Game_Object):
 	"""
 	add collectable Attributes (we cannot pick up the same object 2x)
 	"""
-	def __init__(self, pos_X, pos_Y, appearance, collectable):
-		Game_Object.__init__(self, pos_X, pos_Y, appearance)
+	def __init__(self, appearance, pos_X, pos_Y, collectable):
+		Game_Object.__init__(self, appearance, pos_X, pos_Y)
 		self.collectable = collectable
