@@ -1,3 +1,4 @@
+from maze_map import Maze_Map
 
 class Position:
 
@@ -13,20 +14,21 @@ class Position:
 
     """
 
-#Déplacements
+#Changement de positions
 
     def up(self):
-        x, y = self.position
-        return Position(x, y-1)
+        x, y = self.position                            #extrait x et y du tuple position x,y = (x,y)
+        self.position = (x, y-1)                        #affecte la nouvelle valeur de position
+        #??.try_postion(self.position)
 
     def down(self):
         x, y = self.position
-        return Position(x, y+1)
+        self.position = (x, y+1)
 
     def right(self):
         x, y = self.position
-        return Position(x+1, y)
+        self.position = (x+1, y)
 
     def left(self):
         x, y = self.position
-        return Position(x-1, y)
+        self.position = (x-1, y)
