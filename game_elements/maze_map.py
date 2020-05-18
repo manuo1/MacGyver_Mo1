@@ -23,6 +23,4 @@ class Maze_Map:
                         self.exit_positions = (x, y)           #il n'y a qu'une sortie crée uniquement un tuple et pas une liste de tuples
                         self.path_positions.append((x, y))     #la Sortie est ausssi un chemin
 
-    def try_postion(self,try_position):
-        return try_position in path_positions:
-        
+    

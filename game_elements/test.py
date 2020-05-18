@@ -6,38 +6,49 @@ from items_to_collect import Items_To_Collect
 import random
 
 maze = Maze_Map("maze_map_01.txt")
-#print(maze.path_positions)
-
 hero = Hero(maze.enter_positions[0], maze.enter_positions[1], [])
-#print ("position de hero : {}, inventaire du hero :{}".format(hero.position,hero.inventory))
-
 guardian = Guardian(maze.exit_positions[0], maze.exit_positions[1], False)
-#print ("position de guardien : {}, le gardien dort :{}".format(guardian.position,guardian.is_sleeping))
 
+list_of_item_to_collect = ["needle","tube","ether"]
 random_position_for_items = (random.sample(maze.path_positions, 3)) #sample de random renvoi une liste de 3 coordonées choisie dans path_positions
+item1 = Items_To_Collect(random_position_for_items[0][0], random_position_for_items[0][1],list_of_item_to_collect[0], True)
+item2 = Items_To_Collect(random_position_for_items[1][0], random_position_for_items[1][1],list_of_item_to_collect[1], True)
+item3 = Items_To_Collect(random_position_for_items[2][0], random_position_for_items[2][1],list_of_item_to_collect[2], True)
 
-needle = Items_To_Collect(random_position_for_items[0][0], random_position_for_items[0][1], True)
-#print ("position de needle : {}, on peu ramasser cet objet :{}".format(needle.position,needle.is_collectable))
+game_is_launched = True
 
-tube = Items_To_Collect(random_position_for_items[1][0], random_position_for_items[1][1], True)
-#print ("position de tube : {}, on peu ramasser cet objet :{}".format(tube.position,tube.is_collectable))
+while game_is_launched:
 
-ether = Items_To_Collect(random_position_for_items[2][0], random_position_for_items[2][1], True)
-#print ("position de ether : {}, on peu ramasser cet objet :{}".format(ether.position,ether.is_collectable))
+    print("deplacement : (z=up s=down q=left d=right) (exit pour sortir)")
+    move = input()
+    if move == "z":
+        hero.up()
+    if move == "s":
+        hero.down()
+    if move == "q":
+        hero.left()
+    if move == "d":
+        hero.right()
+    if move == "exit":
+        game_is_launched = False
 
-print ("test si position du hero = position du tube : ")
-hero.position = tube.position
 
-if hero.position == needle.position and needle.is_collectable == True:
-    needle.collectable = False
-    hero.inventory.append("needle")
-elif hero.position == tube.position and tube.is_collectable == True :
-    hero.inventory.append("tube")
-    tube.is_collectable = False
-elif hero.position == ether.position and ether.is_collectable == True :
-    hero.inventory.append("ether")
-    ether.is_collectable = False
+    if hero.position == item1.position and item1.is_collectable == True:
+        item1.collectable = False
+        hero.inventory.append(item1.name)
+    elif hero.position == item2.position and item2.is_collectable == True :
+        hero.inventory.append(item2.name)
+        item2.is_collectable = False
+    elif hero.position == item3.position and item3.is_collectable == True :
+        hero.inventory.append(item3.name)
+        item3.is_collectable = False
 
-print("position de hero : {}, inventaire du hero :{}".format(hero.position,hero.inventory))
-hero.up()
-print("position de hero : {}, inventaire du hero :{}".format(hero.position,hero.inventory))
+    print("position de {} : {}".format(item1.name,item1.position))
+    print("position de {} : {}".format(item2.name,item2.position))
+    print("position de {} : {}".format(item3.name,item3.position))
+    print("position de guardian : {}".format(guardian.position))
+    print("position de hero : {}, inventaire du hero :{}".format(hero.position,hero.inventory))
+
+    if hero.position == guardian.position:
+        game_is_launched = False
+        print("sortie trouvée")

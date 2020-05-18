@@ -18,8 +18,10 @@ class Position:
 
     def up(self):
         x, y = self.position                            #extrait x et y du tuple position x,y = (x,y)
-        self.position = (x, y-1)                        #affecte la nouvelle valeur de position
-        #??.try_postion(self.position)
+        new_position = (x, y-1)
+        #?? test si new_position in path_positions
+        self.position = new_position                    #affecte la nouvelle valeur de position
+
 
     def down(self):
         x, y = self.position
