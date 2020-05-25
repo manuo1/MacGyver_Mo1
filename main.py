@@ -1,8 +1,8 @@
-from position import Position
-from maze_map import MazeMap
-from hero import Hero
-from guardian import Guardian
-from item_to_collect import ItemToCollect
+from game_elements.position import Position
+from game_elements.maze_map import MazeMap
+from game_elements.hero import Hero
+from game_elements.guardian import Guardian
+from game_elements.item_to_collect import ItemToCollect
 
 #création et positionement de tous les objets du jeu
 maze = MazeMap('maze_map_01.txt')

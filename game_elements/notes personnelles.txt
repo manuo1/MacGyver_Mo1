@@ -1,0 +1,89 @@
+ajoueter un test d'overflow sur la creation des item a collecter
+
+bum bag = sac bananne
+
+
+
+f string => f"{a} à {b} €" 
+
+
+
+
+
+
+
+
+Important:
+
+Afin de prendre des bons plis dès le départ, voici quelques recommandations d'ordre générales.
+1. N'utilisez pas l'étoile dans les imports
+2. A part les imports, pas de code en dehors d'une methode, d'une classe ou d'une fonction
+3. Au début, partez sur une règle d'organisation simple: une classe - un module (mieux vaut surdécouper son code que ne pas découper du tout)
+4. Nommer chaque package et module avec un mot descriptif de son contenu, en minuscules. Pas de class, classes, functions, etc. Pour le module,
+    le nom de la classe qu'il contient en minuscule me semble une bonne idée de départ.
+5. Comme vous multipliez les modules, groupez-les dans au min. un package. Pas de module .py au niveau de votre README (sauf un éventuel setup.py)
+6. Respectez les règles de nommage de la PEP8: MaClasse, UNE_CONSTANTE, une_variable, une_methode_ou_fonction.
+7. Utilisez des constantes plutôt que des nombres magiques dans votre code: NUMBER_ITEMS = 3, LABYRINTH_WIDTH = 15, SPRITE_SIZE = 40, etc. et définissez
+    ces variables dans un même fichier (p.ex. settings.py ou config.py).
+8. Eliminer tous les prints de vos classes de logique.
+9. Débuggez avec un debugger, pas avec des prints
+10. Même si vous utilisez pycharm, activez vos environnements virtuels à la main, lancez vos programmes à la main avec python -m package.mainmodule (option -m et pas de .py à la fin).
+____________________________________________________________________________________________________________________________________________________________________________________
+
+
+les étapes qu'il faut retenir:
+- partir des objets
+- identifier les attributs et méthodes
+- identifier les classes
+- créer un module par classe et créer les squelettes pour chaque classe
+- décrire chaque methode en pseudo-code
+- traduire le pseudo-code en python ligne par ligne. Si c'est encore trop compliqué, créer des méthodes privées pour simplifier
+- valider le projet
+____________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+Note pour ceux qui démarrent: Pour ceux qui commencent sur python et qui veulent quelque chose de solide:
+- Think Python https://greenteapress.com/wp/think-python-2e/. Porte sur python 3.4, mais cela n'a pas d'incident sur les fondamentaux
+- Python 3 : des fondamentaux aux concepts avancés du langage https://www.fun-mooc.fr/courses/course-v1:UCA+107001+session02/about
+- Le tutoriel officiel pour aquérir une bonne vision d'ensemble de Python https://docs.python.org/fr/3/tutorial/index.html
+- Le blog Python Module Of The Week (PyMOTW) pour apprendre à utiliser les modules de la bibliothèque standard https://pymotw.com/3/
+
+Pour les livres payant, je recommande:
+- Introducing Python, 2nd Edition, O'Reilly, Bill Lubanovic, 2019.
+- Learning Python, 5th Edition, O'Reilly, Mark Lutz, 2013 (Python 3.3, mais très complet)
+
+Les blogs de confiance:
+- Real Python https://realpython.com/
+- Sam & Max http://sametmax.com/
+- De manière générale ce qui est relayé par Planet Python https://planetpython.org/index.html
+(plus à venir)
+
+Les ressources à éviter sont:
+- Le cours pygame de Openclassrooms: https://openclassrooms.com/fr/courses/1399541-interface-graphique-pygame-pour-python/1399674-presentation-de-pygame
+- Le livre "Apprendre à programmer avec Python 3" de Swinnen https://inforef.be/swi/download/apprendre_python3_5.pdf (sauf pour les exercices)
+- Tous les tutos ou blogs dont vous ne savez rien sur l'auteur
+
+____________________________________________________________________________________________________________________________________________________________________________________
+
+Suite à une discussion avec un étudiant, voici la suite d'outils que je recommande pour finaliser un projet avant soutenance et s'assurer sa qualité du point de vue d'un certain nombre de bonnes pratiques. La première étape est de lire les pep8 et 257 (http://nguyen.univ-tln.fr/share/Python/pep8.pdf)
+flake8
+    installation: pipenv install flake8 --dev
+    lancement: flake8 à la racine du projet
+    description: Affiche un diagnostique des erreurs de pep8
+autopep8
+    installation: pipenv install autopep8 --dev
+    lancement: autopep8 --recursive --in-place . à la racine du projet (le point a de l'importance)
+    description: Corrige automatiquement de nombreuses erreurs de pep8
+isort
+    installation: pipenv install "isort[requirements,pipfile]" --dev
+    lancement: isort -rc . à la racine du projet
+    description: Trie les imports automatiqument
+docformatter
+    installation: pipenv install docformatter --dev
+    lancement: docformatter --recursive --in-place . à la racine du projet
+    description: Formate automatiquement les docstrings de manière conforme à la PEP 257
+
+Pour le formattage automatique, j'utilise black, qui est plus agressif que autopep8, mais qui formate également le code pour éviter les lignes trop longues. J'installe black avec pipenv install black --pre --dev et je lance avec black --line-length 79 -t py37 -S .  (le point a de l'importance et l'option -S a été recommandée par @SebDeclercq ci-dessous pour désactiver l'uniformisation des guillemets). Il est également possible de lancer black directement depuis son éditeur et d'utiliser l'option "Format on save" pour ne plus avoir à y penser. @Zepman | Benjamin nous donne un lien ici: https://discordapp.com/channels/347061157351260161/347074846313938944/694266884643881002
+
+Note sur l'usage de pipenv. C'est ici un choix de ma part basé sur ma pratique personnelle. N'hésitez pas à remplacer les commandes pipenv par pip et à enlever les options --dev dans ce cas.

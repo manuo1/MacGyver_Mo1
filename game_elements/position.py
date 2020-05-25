@@ -1,5 +1,3 @@
-from maze_map import Maze_Map
-
 class Position:
 
     def __init__(self, x, y):
@@ -18,19 +16,25 @@ class Position:
 
     def up(self):
         x, y = self.position                            #extrait x et y du tuple position x,y = (x,y)
-        new_position = (x, y-1)
-        #?? test si new_position in path_positions
-        self.position = new_position                    #affecte la nouvelle valeur de position
-
+        new_position = (x, y-1)                         #calcul la nouvelle position
+        if new_position in self.path_positions:         #verifie si la nouvelle position fait bien partie des chemins
+            self.position = new_position                #si oui affecte la nouvelle valeur de position
 
     def down(self):
         x, y = self.position
-        self.position = (x, y+1)
+        new_position = (x, y+1)
+        if new_position in self.path_positions:
+            self.position = new_position
 
     def right(self):
         x, y = self.position
-        self.position = (x+1, y)
+        new_position = (x+1, y)
+        if new_position in self.path_positions:
+            self.position = new_position
 
     def left(self):
         x, y = self.position
-        self.position = (x-1, y)
+        new_position = (x-1, y)
+        if new_position in self.path_positions:
+            self.position = new_position
+            
