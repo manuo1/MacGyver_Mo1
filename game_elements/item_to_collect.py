@@ -1,21 +1,27 @@
-from position import Position
+from game_elements.position import Position
+from config.settings import item_to_collect_names
 
 
 
 class ItemToCollect(Position):
 
-    list = ['needle','tube','ether']
-    list.sort()    #trie les elements de la liste dans l'ordre alphabetique
-    list_index = 0
+    #recupere la liste des noms des objets à collecter
+    names = item_to_collect_names
+    #trie dans l'ordre alphabetique
+    names.sort()
+    index = 0
+    #dictionaire pour stocker la position en clée et
+    #   le nom en valeur de chaque Objets à collecter
+    dict ={}
 
-    def __init__(self, x, y, is_collectable): #pour ne pas pouvoir collecter un objet 2X
-        Position.__init__(self, x, y)
-        self.is_collectable = is_collectable
-        self.name = ItemToCollect.list[ItemToCollect.list_index]
-        ItemToCollect.list_index += 1
+    def __init__(self, items_to_collects_positions):
 
-        self
-
-    
-    def is_no_longer_collectable(self):
-        self.is_collectable = False
+        for positions in items_to_collects_positions:
+            x, y = positions
+            Position.__init__(self, x, y)
+            #recupere le nom de l'objet
+            self.name = ItemToCollect.names[ItemToCollect.index]
+            #ajoute au dictionaire la position et le nom
+            ItemToCollect.dict[self.position] = self.name
+            #incremante l'index pour le prochain objet
+            ItemToCollect.index += 1

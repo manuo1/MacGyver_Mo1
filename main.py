@@ -1,59 +1,45 @@
-from game_elements.position import Position
+import pygame
 from game_elements.maze_map import MazeMap
 from game_elements.hero import Hero
 from game_elements.guardian import Guardian
 from game_elements.item_to_collect import ItemToCollect
+from display.size import Size
+from display.game_display import GameDisplay
+from config.settings import path_image
 
-#création et positionement de tous les objets du jeu
-maze = MazeMap('maze_map_01.txt')
-hero = Hero(maze.enter_positions[0], maze.enter_positions[1], maze.path_positions, [])
-guardian = Guardian(maze.exit_positions[0], maze.exit_positions[1], False)
-item_to_collect_1 = ItemToCollect(maze.items_to_collects_positions[0][0], maze.items_to_collects_positions[0][1], True)
-item_to_collect_2 = ItemToCollect(maze.items_to_collects_positions[1][0], maze.items_to_collects_positions[1][1], True)
-item_to_collect_3 = ItemToCollect(maze.items_to_collects_positions[2][0], maze.items_to_collects_positions[2][1], True)
+#création et positionement des objets du jeu
+maze = MazeMap()
+guardian = Guardian(maze.exit_position)
+items_to_collect = ItemToCollect(maze.items_to_collects_positions)
+hero = Hero(maze.enter_position,
+            maze.path_positions,
+            guardian.position,
+            items_to_collect.dict)
+size = Size()
 
+pygame.init()
 
-#debut du jeux
-game_is_runing = True
-
-while game_is_runing:
-
-    print('deplacement : (z=up s=down q=left d=right) (exit pour sortir)')
-    move = input()
-    if move == 'z':
-        hero.up()
-    if move == 's':
-        hero.down()
-    if move == 'q':
-        hero.left()
-    if move == 'd':
-        hero.right()
-    if move == 'exit':
-        game_is_runing = False
+pygame.display.set_caption("Aidez MacGyver à s'échapper !")
+game_screen =pygame.display.set_mode(size.game_screen)
 
 
-    if hero.position == item_to_collect_1.position and item_to_collect_1.is_collectable == True:
-        hero.add_to_inventory(item_to_collect_1.name)
-        item_to_collect_1.is_no_longer_collectable()
-    elif hero.position == item_to_collect_2.position and item_to_collect_2.is_collectable == True :
-        item_to_collect_2.is_no_longer_collectable()
-        hero.add_to_inventory(item_to_collect_2.name)
-    elif hero.position == item_to_collect_3.position and item_to_collect_3.is_collectable == True :
-        item_to_collect_3.is_no_longer_collectable()
-        hero.add_to_inventory(item_to_collect_3.name)
+game_display = GameDisplay(size.squares, guardian.position, hero.items_to_collect_dict)
+
+#applique les images qui ne seront pas rafraichies
+GameDisplay.maze_blocks_sprites.draw(game_screen)
+GameDisplay.items_sprites.draw(game_screen)
+GameDisplay.guardian_sprite.draw(game_screen)
 
 
-    print('position de {} : {}'.format(item_to_collect_1.name,item_to_collect_1.position))
-    print('position de {} : {}'.format(item_to_collect_2.name,item_to_collect_2.position))
-    print('position de {} : {}'.format(item_to_collect_3.name,item_to_collect_3.position))
-    print('position de guardian : {}'.format(guardian.position))
-    print('position de hero : {}, inventaire du hero :{}'.format(hero.position,hero.inventory))
+while hero.is_in_game:
+    #appliquer l'image du menu
+    GameDisplay.back_ground_menu_sprites.draw(game_screen)
 
+    #appliquer l'image d'un chemin sur l'ancienne position pour effacer tout sur le passage du joueur
+    game_screen.blit(game_display.path_image, [hero.old_position[0]*size.squares, hero.old_position[1]*size.squares])
+    #applique l'image du hero
+    game_screen.blit(game_display.hero_display.image, [hero.position[0]*size.squares, hero.position[1]*size.squares])
+    #met à jour l'écran
+    pygame.display.flip()
 
-    if hero.position == guardian.position and hero.inventory == list_of_item_to_collect :
-        print('WIN')
-        game_is_runing = False
-
-    elif hero.position == guardian.position and hero.inventory != list_of_item_to_collect :
-        print('LOOSE')
-        game_is_runing = False
+    hero.move()

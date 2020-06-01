@@ -4,10 +4,44 @@ bum bag = sac bananne
 
 
 
-f string => f"{a} à {b} €" 
+f string => f"{a} à {b} €"
 
+Pour l'affichage des sprites, une bonne méthodes est de créer des instances héritant de pygame.sprite.Sprite dans un groupe de type pygame.sprite.Group.
+C'est la manière classique de procéder en pygame et ça permet de gérer l'affichage en une ligne (enfin, quelques lignes)
+------------------------------------------------------------------------------------------------------------------------------------
 
+def draw_paths(self, background, paths):
+    path_image = pygame.image.load("/path/to/image").convert()
+    for path in paths:
+        x, y = path
+        background.blit(path_image, (x * SPRITE_WIDTH, y * SPRITE_HEIGHT))
+-----------------------------------------------------------------------------------------------------------
+L'arrière-plan est une image que tu donnes à Pygame. Tu "colles" ensuite tes sprites dessus.
 
+-------------------------------------------------------------------------------------------------------------
+Par ailleurs, prend l'habitude dès le début de documenter tes méthodes avec des docstrings.
+Pas
+# Documentation de ma méthode d'initialisation
+def __init__(self, param1, param2):
+
+Mais
+class MaClasse:
+    """Documentation de la classe et de ses attributs.
+
+    Attributes:
+        attribute1: Documentation de attribute1.
+        attribute2: ...
+
+    """
+
+    def __init__(self, param1, param2):
+        """Documentation de la méthode d'initialisation.
+
+        Args:
+            param1: Documentation du paramètre 1
+            param2: ...
+
+        """
 
 
 
@@ -15,7 +49,6 @@ f string => f"{a} à {b} €"
 
 Important:
 
-Afin de prendre des bons plis dès le départ, voici quelques recommandations d'ordre générales.
 1. N'utilisez pas l'étoile dans les imports
 2. A part les imports, pas de code en dehors d'une methode, d'une classe ou d'une fonction
 3. Au début, partez sur une règle d'organisation simple: une classe - un module (mieux vaut surdécouper son code que ne pas découper du tout)
@@ -39,31 +72,6 @@ les étapes qu'il faut retenir:
 - décrire chaque methode en pseudo-code
 - traduire le pseudo-code en python ligne par ligne. Si c'est encore trop compliqué, créer des méthodes privées pour simplifier
 - valider le projet
-____________________________________________________________________________________________________________________________________________________________________________________
-
-
-
-Note pour ceux qui démarrent: Pour ceux qui commencent sur python et qui veulent quelque chose de solide:
-- Think Python https://greenteapress.com/wp/think-python-2e/. Porte sur python 3.4, mais cela n'a pas d'incident sur les fondamentaux
-- Python 3 : des fondamentaux aux concepts avancés du langage https://www.fun-mooc.fr/courses/course-v1:UCA+107001+session02/about
-- Le tutoriel officiel pour aquérir une bonne vision d'ensemble de Python https://docs.python.org/fr/3/tutorial/index.html
-- Le blog Python Module Of The Week (PyMOTW) pour apprendre à utiliser les modules de la bibliothèque standard https://pymotw.com/3/
-
-Pour les livres payant, je recommande:
-- Introducing Python, 2nd Edition, O'Reilly, Bill Lubanovic, 2019.
-- Learning Python, 5th Edition, O'Reilly, Mark Lutz, 2013 (Python 3.3, mais très complet)
-
-Les blogs de confiance:
-- Real Python https://realpython.com/
-- Sam & Max http://sametmax.com/
-- De manière générale ce qui est relayé par Planet Python https://planetpython.org/index.html
-(plus à venir)
-
-Les ressources à éviter sont:
-- Le cours pygame de Openclassrooms: https://openclassrooms.com/fr/courses/1399541-interface-graphique-pygame-pour-python/1399674-presentation-de-pygame
-- Le livre "Apprendre à programmer avec Python 3" de Swinnen https://inforef.be/swi/download/apprendre_python3_5.pdf (sauf pour les exercices)
-- Tous les tutos ou blogs dont vous ne savez rien sur l'auteur
-
 ____________________________________________________________________________________________________________________________________________________________________________________
 
 Suite à une discussion avec un étudiant, voici la suite d'outils que je recommande pour finaliser un projet avant soutenance et s'assurer sa qualité du point de vue d'un certain nombre de bonnes pratiques. La première étape est de lire les pep8 et 257 (http://nguyen.univ-tln.fr/share/Python/pep8.pdf)
