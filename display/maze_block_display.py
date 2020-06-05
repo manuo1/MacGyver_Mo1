@@ -1,20 +1,19 @@
 import pygame
-from config.settings import wall_image, path_image
+from config.settings import WALL_IMAGE, PATH_IMAGE, SQUARES_SIZE
 
-#quand le hero passe sur l'objet il va effacer l'affichage de l'objet
 class MazeBlockDisplay(pygame.sprite.Sprite):
+    """creates a labyrinth block surface"""
 
-
-    def __init__(self, squares_size, x, y, name):
-        super().__init__() #initialise la superclasse Sprite
-
-        if name == 'wall':
-            self.image = pygame.image.load(wall_image).convert_alpha()
-        elif name == 'path':
-            self.image = pygame.image.load(path_image).convert_alpha()
-
-
-        self.image = pygame.transform.scale(self.image, (squares_size, squares_size))
+    def __init__(self, x, y, name):
+        super().__init__()
+        #build image block name
+        image_name = globals()[name+'_IMAGE']
+        #load block image
+        self.image = pygame.image.load(image_name).convert_alpha()
+        #resize image
+        self.image = pygame.transform.scale(self.image,
+                                            (SQUARES_SIZE, SQUARES_SIZE))
+        #places the block surface
         self.rect = self.image.get_rect()
-        self.rect.x = x*squares_size
-        self.rect.y = y*squares_size
+        self.rect.x = x*SQUARES_SIZE
+        self.rect.y = y*SQUARES_SIZE

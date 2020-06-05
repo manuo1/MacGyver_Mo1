@@ -1,9 +1,13 @@
 import pygame
-from config.settings import hero_image
+from config.settings import HERO_IMAGE, SQUARES_SIZE
 
 class HeroDisplay(pygame.sprite.Sprite):
-    def __init__(self, squares_size):
-        super().__init__() #initialise la superclasse Sprite
+    """creates hero surface"""
 
-        self.image = pygame.image.load(hero_image).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (squares_size, squares_size))
+    def __init__(self):
+        super().__init__()
+        #load hero image
+        self.image = pygame.image.load(HERO_IMAGE).convert_alpha()
+        #resize image
+        self.image = pygame.transform.scale(self.image,
+                                            (SQUARES_SIZE, SQUARES_SIZE))

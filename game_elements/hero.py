@@ -1,30 +1,39 @@
 import pygame
 from game_elements.position import Position
-from config.settings import item_to_collect_names
+from config.settings import ITEMS_TO_COLLECT_NAMES
 
 class Hero(Position):
-
-    def __init__(self, enter_position, maze_path_positions, guardian_position, items_to_collect_dict): #maze.path_positions en argument pour pouvoir recuperer les position valides de deplacements
+    """creates hero"""
+    def __init__(self, enter_position, maze_path_positions, guardian_position, items_to_collect_dict):
         x, y = enter_position
         Position.__init__(self, x, y)
+
         self.inventory = []
         self.maze_path_positions = maze_path_positions
         self.guardian_position = guardian_position
         self.items_to_collect_dict = items_to_collect_dict
-        self.is_in_game = True
         self.old_position = enter_position
+        self.is_in_the_game = True
+        self.win_or_loose = ''
+
 
     def move(self):
+        """get pygame events for hero movements and quitting the game"""
+        #for each event in the pygame event queue
         for event in pygame.event.get():
+            #if event is exit button
             if event.type == pygame.QUIT:
-                self.is_in_game = False
-                pygame.quit()
+                #player as left the game
+                self.is_in_the_game = False
+            #if event is a key pressed
             elif event.type == pygame.KEYDOWN:
-
+                #if key pressed is escape
                 if event.key == pygame.K_ESCAPE:
-                    self.is_in_game = False
-                    pygame.quit()
+                    #player as left the game
+                    self.is_in_the_game = False
+                #if key pressed is the right arrow keys
                 elif event.key == pygame.K_RIGHT:
+                    #move to the right
                     self.right()
                 elif event.key == pygame.K_LEFT:
                     self.left()
@@ -35,23 +44,25 @@ class Hero(Position):
 
 
 
-    def add_to_inventory(self, item_to_collect_name):
-        #si l'objet n'est pas deja dans l'inventaire
-        if item_to_collect_name not in self.inventory:
-            #ajoute le nom de l'objet collecté a l'inventaire du hero
-            self.inventory.append(item_to_collect_name)
-            #trie l'inventaire du hero dans l'ordre alphabetique
+    def add_to_inventory(self, item_name):
+        """add an item to inventory hero"""
+        #if the item is not already in the hero's inventory.
+        if item_name not in self.inventory:
+            #adds the name of the collected item to the hero's inventory
+            self.inventory.append(item_name)
+            #sort the hero's inventory in alphabetical order
             self.inventory.sort()
 
     def check_if_win(self):
-        #recupere la liste des noms des objets à collecter
-        item_list = item_to_collect_names
-        #trie dans l'ordre alphabetique
+        """compares the hero's inventory to the list of items to collect to see if the player has collected all the items"""
+        #create a copy of ITEMS_TO_COLLECT_NAMES
+        item_list = ITEMS_TO_COLLECT_NAMES
+        #sort the copy of the list in alphabetical order
         item_list.sort()
-        # compare les deux listes pour savoir si le joueur a collecter tout les objets
+        #If the player has collected all the items :
         if self.inventory == item_list:
-            self.is_in_game = False
-            print('WIN')
+            #  the player wins
+            self.win_or_loose = 'win'
         else:
-            self.is_in_game = False
-            print('LOOSE')
+            #  the player looses
+            self.win_or_loose = 'loose'

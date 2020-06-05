@@ -3,43 +3,48 @@ from game_elements.maze_map import MazeMap
 from game_elements.hero import Hero
 from game_elements.guardian import Guardian
 from game_elements.item_to_collect import ItemToCollect
-from display.size import Size
 from display.game_display import GameDisplay
-from config.settings import path_image
-
-#création et positionement des objets du jeu
-maze = MazeMap()
-guardian = Guardian(maze.exit_position)
-items_to_collect = ItemToCollect(maze.items_to_collects_positions)
-hero = Hero(maze.enter_position,
-            maze.path_positions,
-            guardian.position,
-            items_to_collect.dict)
-size = Size()
-
-pygame.init()
-
-pygame.display.set_caption("Aidez MacGyver à s'échapper !")
-game_screen =pygame.display.set_mode(size.game_screen)
+from config.settings import FPS
 
 
-game_display = GameDisplay(size.squares, guardian.position, hero.items_to_collect_dict)
+def main():
+    """game main fonction"""
+    #creates the maze
+    maze = MazeMap()
+    #creates the guardian
+    guardian = Guardian(maze.exit_position)
+    #creates the items to collect dictionary
+    items_to_collect = ItemToCollect(maze.items_to_collects_positions)
+    #creates the hero
+    hero = Hero(maze.enter_position,
+                maze.path_positions,
+                guardian.position,
+                items_to_collect.dict)
 
-#applique les images qui ne seront pas rafraichies
-GameDisplay.maze_blocks_sprites.draw(game_screen)
-GameDisplay.items_sprites.draw(game_screen)
-GameDisplay.guardian_sprite.draw(game_screen)
+    #creates the game elements display
+    game_display = GameDisplay(guardian.position, hero.items_to_collect_dict)
+    #creation of the clock for setting the fps
+    clock = pygame.time.Clock()
+    #apply images that will not be refreshed in the game
+    game_display.unrefreshed_images_blit()
 
 
-while hero.is_in_game:
-    #appliquer l'image du menu
-    GameDisplay.back_ground_menu_sprites.draw(game_screen)
+    while hero.is_in_the_game:
+        #apply the hero image
+        game_display.hero_blit(hero.position, hero.old_position)
+        #apply the hero inventory images
+        game_display.hero_inventory_blit(hero.inventory)
+        #check if the player move the hero
+        hero.move()
+        #apply end game message when player finish the game
+        game_display.end_game_message(hero.win_or_loose)
+        #set the game fps
+        clock.tick(FPS)
+        #Update the full display Surface to the game screen
+        pygame.display.flip()
 
-    #appliquer l'image d'un chemin sur l'ancienne position pour effacer tout sur le passage du joueur
-    game_screen.blit(game_display.path_image, [hero.old_position[0]*size.squares, hero.old_position[1]*size.squares])
-    #applique l'image du hero
-    game_screen.blit(game_display.hero_display.image, [hero.position[0]*size.squares, hero.position[1]*size.squares])
-    #met à jour l'écran
-    pygame.display.flip()
+    pygame.quit()
 
-    hero.move()
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()

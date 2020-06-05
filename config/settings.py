@@ -1,19 +1,26 @@
 import os
 
-game_window_height = 800
+GAME_WINDOW_HEIGHT = 800
+END_TEXT_COLOR = 255, 51, 0
+END_TEXT = {'win': "Vous avez gagnez !", 'loose': "Vous avez perdu !"}
+FPS = 30
 
-file_path = os.path.split(os.path.abspath(__file__))[0]
+#create the path to the game's main directory for the player's operating system
+FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+#list of the items to collect
+ITEMS_TO_COLLECT_NAMES = ['NEEDLE','TUBE','ETHER']
+#sets files paths
+MAZE_MAP_TEXT_FILE = os.path.join(FILE_PATH, "maze_map_01.txt")
+PATH_IMAGE = os.path.join(FILE_PATH, 'ressources', "path.png")
+WALL_IMAGE = os.path.join(FILE_PATH, 'ressources', "wall.png")
+HERO_IMAGE = os.path.join(FILE_PATH, 'ressources', "hero.png")
+GUARDIAN_IMAGE = os.path.join(FILE_PATH, 'ressources', "guardian.png")
+NEEDLE_IMAGE = os.path.join(FILE_PATH, 'ressources', "needle.png")
+TUBE_IMAGE = os.path.join(FILE_PATH, 'ressources', "tube.png")
+ETHER_IMAGE = os.path.join(FILE_PATH, 'ressources', "ether.png")
+MENU_IMAGE = os.path.join(FILE_PATH, 'ressources', "menu_image.png")
 
-maze_map_filename = os.path.join(file_path, "maze_map_01.txt")
-path_image = os.path.join(file_path, "path.png")
-wall_image = os.path.join(file_path, "wall.png")
-hero_image = os.path.join(file_path, "hero.png")
-guardian_image = os.path.join(file_path, "guardian.png")
-needle_image = os.path.join(file_path, "needle.png")
-tube_image = os.path.join(file_path, "tube.png")
-ether_image = os.path.join(file_path, "ether.png")
-
-item_to_collect_names = ['needle','tube','ether']
-
-black_color = 0, 0, 0
-white_color = 255, 255, 255
+#sets the game squares size
+SQUARES_SIZE = GAME_WINDOW_HEIGHT//15
+#sets the game screen size
+GAME_SCREEN_SIZE = SQUARES_SIZE*(15+5), SQUARES_SIZE*15

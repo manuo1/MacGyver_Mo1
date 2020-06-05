@@ -1,22 +1,20 @@
 import pygame
-from config.settings import ether_image, needle_image, tube_image, item_to_collect_names
+from config.settings import (ETHER_IMAGE, NEEDLE_IMAGE, TUBE_IMAGE,
+                             ITEMS_TO_COLLECT_NAMES, SQUARES_SIZE)
 
-#quand le hero passe sur l'objet il va effacer l'affichage de l'objet
 class ItemToCollectDisplay(pygame.sprite.Sprite):
+    """creates an "item to collect" surface"""
 
-
-    def __init__(self, squares_size, x, y, name):
-        super().__init__() #initialise la superclasse Sprite
-
-        if name == 'ether':
-            self.image = pygame.image.load(ether_image).convert_alpha()
-        elif name == 'needle':
-            self.image = pygame.image.load(needle_image).convert_alpha()
-        elif name == 'tube':
-            self.image = pygame.image.load(tube_image).convert_alpha()
-
-
-        self.image = pygame.transform.scale(self.image, (squares_size, squares_size))
+    def __init__(self, x, y, name):
+        super().__init__()
+        #build image item name
+        image_name = globals()[name+'_IMAGE']
+        #load item image
+        self.image = pygame.image.load(image_name).convert_alpha()
+        #resize image
+        self.image = pygame.transform.scale(self.image,
+                                            (SQUARES_SIZE, SQUARES_SIZE))
+        #places the surface
         self.rect = self.image.get_rect()
-        self.rect.x = x*squares_size
-        self.rect.y = y*squares_size
+        self.rect.x = x*SQUARES_SIZE
+        self.rect.y = y*SQUARES_SIZE

@@ -1,27 +1,23 @@
 from game_elements.position import Position
-from config.settings import item_to_collect_names
-
-
+from config.settings import ITEMS_TO_COLLECT_NAMES
 
 class ItemToCollect(Position):
-
-    #recupere la liste des noms des objets à collecter
-    names = item_to_collect_names
-    #trie dans l'ordre alphabetique
+    """create a dictionary for the items to collect"""
+    #get items names
+    names = ITEMS_TO_COLLECT_NAMES
+    #sort list alphabetically
     names.sort()
-    index = 0
-    #dictionaire pour stocker la position en clée et
-    #   le nom en valeur de chaque Objets à collecter
+    #create empty dictionary
     dict ={}
 
     def __init__(self, items_to_collects_positions):
-
+        # for all positions in items positions list
         for positions in items_to_collects_positions:
+            #get x & y from positions
             x, y = positions
+            #init parent class
             Position.__init__(self, x, y)
-            #recupere le nom de l'objet
-            self.name = ItemToCollect.names[ItemToCollect.index]
-            #ajoute au dictionaire la position et le nom
+            #get name in list
+            self.name = ItemToCollect.names[items_to_collects_positions.index(positions)]
+            #add to dictionary position as key and name as value
             ItemToCollect.dict[self.position] = self.name
-            #incremante l'index pour le prochain objet
-            ItemToCollect.index += 1

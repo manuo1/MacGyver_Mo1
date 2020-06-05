@@ -1,25 +1,31 @@
 from random import sample
-from config.settings import maze_map_filename
+from config.settings import MAZE_MAP_TEXT_FILE
 
 class MazeMap:
-
+    """create the maze structure from the maze text file map"""
     def __init__(self):
-        self.maze_map_filename = maze_map_filename
-        self.path_positions = []        #liste des coordonées des chemin
-        self.enter_position = ()       #coordonées de l'entrées
-        self.exit_position = ()        #coordonées de la sorties
-
-        with open(self.maze_map_filename) as infile:            #ouvre le fichier texte contenant le plan du labyrinthe
-            for y, line in enumerate(infile):                   #pour chaque ligne de infile recupere dans y le numero de ligne
-                for x, char in enumerate(line):                 #pour chaque colone de chaque lignes recupere dans x la position du caractere dans la ligne
-                    if char == 'P':                             #si le caractere lu est un P
-                        self.path_positions.append((x, y))      #ajoute sa position à la liste des chemins
+        self.path_positions = []
+        self.enter_position = ()
+        self.exit_position = ()
+        #open and use the maze map text file
+        with open(MAZE_MAP_TEXT_FILE) as infile:
+            #for all lines in maze map text file
+            for y, line in enumerate(infile):
+                #for all character in the line
+                for x, char in enumerate(line):
+                    #if character is P
+                    if char == 'P':
+                        #add position to path position list
+                        self.path_positions.append((x, y))
+                    #if character is S
                     elif char == 'S':
+                        #set maze enter position
                         self.enter_position = (x, y)
+                    #if character is X
                     elif char == 'X':
+                        #set maze exit position
                         self.exit_position = (x, y)
-
-        self.items_to_collects_positions = (sample(self.path_positions, 3))     #sample (du module random) renvoi une liste de 3 coordonées choisie dans path_positions
-                                                                                #mais avant d'ajouter l'entree et la sortie à la liste des chemins
-        self.path_positions.append(self.enter_position)                        #Ajout l'entrée aux chemins possibles
-        self.path_positions.append(self.exit_position)                         #Ajout la sortie aux chemins possibles
+        #add 3 random positions from the path list to the item position list
+        self.items_to_collects_positions = (sample(self.path_positions, 3))
+        #add enter and exit positions to path list
+        self.path_positions.extend((self.enter_position, self.exit_position))
