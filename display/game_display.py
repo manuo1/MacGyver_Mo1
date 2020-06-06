@@ -1,7 +1,7 @@
 import pygame
 from config.settings import (END_TEXT, END_TEXT_COLOR, GAME_SCREEN_SIZE,
                              MAZE_MAP_TEXT_FILE, MENU_IMAGE, PATH_IMAGE,
-                             SQUARES_SIZE)
+                             SQUARES_SIZE, GAME_WINDOW_TITLE)
 from display.guardian_display import GuardianDisplay
 from display.hero_display import HeroDisplay
 from display.item_to_collect_display import ItemToCollectDisplay
@@ -9,6 +9,7 @@ from display.maze_block_display import MazeBlockDisplay
 
 
 class GameDisplay:
+    """manages all display part."""
     # create sprites groups
     guardian_sprite = pygame.sprite.Group()
     items_sprites = pygame.sprite.Group()
@@ -16,13 +17,12 @@ class GameDisplay:
     hero_inventory_display_sprites = pygame.sprite.Group()
 
     def __init__(self, guardian_position, items_to_collect_dict):
-        """manages all display part."""
         # initialize all imported pygame modules
         pygame.init()
         # Initialize the game screen
         self.game_screen = pygame.display.set_mode(GAME_SCREEN_SIZE)
         # Set the game screen title
-        pygame.display.set_caption("Aidez MacGyver à s'échapper !")
+        pygame.display.set_caption(GAME_WINDOW_TITLE)
         # create a hero display
         self.hero_display = HeroDisplay()
         # create a guardian display and add it to the guardian_sprite group

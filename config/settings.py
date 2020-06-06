@@ -20,6 +20,8 @@ TUBE_IMAGE = os.path.join(FILE_PATH, 'ressources', "tube.png")
 ETHER_IMAGE = os.path.join(FILE_PATH, 'ressources', "ether.png")
 MENU_IMAGE = os.path.join(FILE_PATH, 'ressources', "menu_image.png")
 
+GAME_WINDOW_TITLE = "Aidez MacGyver à s'échapper !"
+
 # sets the game squares size
 SQUARES_SIZE = GAME_WINDOW_HEIGHT // 15
 # sets the game screen size
