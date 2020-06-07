@@ -28,21 +28,20 @@ class Position:
         new_position = (x - 1, y)
         self.check_position(new_position)
 
-    # controles sur la nouvelle position
     def check_position(self, new_position):
-        """check if the new position is authorized."""
-        # verifie que cette nouvelle position est bien un chemin
+        """checks on the new position."""
+        # check that this new position is indeed a path
         if new_position in self.maze_path_positions:
-            # enregistre la position precedante
+            # save the previous position
             self.old_position = self.position
             self.position = new_position
-            # si passe sur un objet
+            # if passes over an object
             if self.position in self.items_to_collect_dict.keys():
-                # demande un ajout à l'inventaire
+                    # adds to inventory
                 self.add_to_inventory(
                     self.items_to_collect_dict[self.position]
                 )
-                # si passe sur le gardien
+                # if passes over the guardian
             elif self.position == self.guardian_position:
-                # controle si le joueur gagne ou perd
+                # check if player win or loose
                 self.check_if_win()
