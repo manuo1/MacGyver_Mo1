@@ -3,17 +3,21 @@
 ###############################################################################
 
 the game was developed in python language in a virtual environment.
-
-It requires to operate pyhton and pipenv 
-
+It requires to operate pyhton and pip 
 At the root of the project, in a terminal launch the game with :
 
-	pipenv install
+if you use pipenv :
 
-then
+		pipenv install
+	then
+		pipenv run main.py
 
-	pipenv run main.py
 	
+without pipenv :
+
+		pip install -r requirements.txt
+	and run with
+		python main.py
 	
 ###############################################################################
 ################################### RULES #####################################
